@@ -1,0 +1,6 @@
+Test Writting Process:
+1- pick one out component to test all by itself.
+2- Make a test file for a component if one does not exist.
+3- Decide what the important parts of the component are.
+4- Write a test make sure each part work as expected.
+5- Run test at the command line.
