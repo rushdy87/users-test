@@ -1,8 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import UserList from './UserList';
 
-test('render one row per user', () => {
-  // 1. Render the compnent.
+function renderComponent() {
   const users = [
     {
       name: 'test1',
@@ -14,6 +13,13 @@ test('render one row per user', () => {
     },
   ];
   render(<UserList users={users} />);
+
+  return { users };
+}
+
+test('render one row per user', () => {
+  // 1. Render the compnent.
+  renderComponent();
 
   // 2. Find all the rows in the table.
   const rows = within(screen.getByTestId('users')).getAllByRole('row');
@@ -23,17 +29,7 @@ test('render one row per user', () => {
 });
 
 test('render name and email of each user', () => {
-  const users = [
-    {
-      name: 'test1',
-      email: 'test1@test.com',
-    },
-    {
-      name: 'test2',
-      email: 'test2@test.com',
-    },
-  ];
-  render(<UserList users={users} />);
+  const { users } = renderComponent();
 
   for (let user of users) {
     const name = screen.getByRole('cell', { name: user.name });
