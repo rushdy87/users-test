@@ -45,9 +45,19 @@ test('it calls onUserAdd when the form is submitted', async () => {
   expect(moke).toHaveBeenCalledWith({ name: 'jane', email: 'jane@jane.com' });
 });
 
-/*
-* Whenever we render our componet by calling a render function, a fake brower enviromant is being created
-  by a library called jsdom
-* access elements by screen object.
-*
-*/
+test('empties the two inputs when form submitted', async () => {
+  render(<UserForm onUserAdd={() => {}} />);
+  const nameInput = screen.getByRole('textbox', { name: /name/i });
+  const emailInput = screen.getByRole('textbox', { name: /enter email/i });
+  const button = screen.getByRole('button');
+
+  await user.click(nameInput);
+  await user.keyboard('jane');
+  await user.click(emailInput);
+  await user.keyboard('jane@jane.com');
+
+  await user.click(button);
+
+  expect(nameInput).toHaveValue('');
+  expect(emailInput).toHaveValue('');
+});
